@@ -4,6 +4,7 @@ const ctx = canvas.getContext('2d');
 const sampleData = {}
 var x = 0;
 var y = 0;
+var timeScale = document.getElementById("timeSlider")
 var cooldown = false;
 var tempString
 
@@ -20,7 +21,7 @@ function overwriteFile() {
   var outputText = filteredLines.join("\n");
   console.log(outputText)
   tempString = outputText
-  document.getElementById("input").value = outputText;
+  //document.getElementById("input").value = outputText;
 }
 
 function convertToDict() {
@@ -57,8 +58,8 @@ function submitHandler() {
   var inputValue = document.getElementById("input").value; // Assigns contents of text box to inputValue
   overwriteFile();
   var dictionary = convertToDict();
-  document.getElementById("output").textContent = "Please refresh the page to fix an error, if it failed make sure you copied it properly otherwise contact galaga for assistance";
-  document.getElementById("input").value = ""; // Clear input
+  document.getElementById("output").textContent = "Please refresh the page in case of error. If it failed make sure the data was copied properly otherwise contact galaga for assistance.";
+  //document.getElementById("input").value = ""; // Clear input
   drawPath(dictionary,100) // Runs the path trace
 }
 
@@ -66,8 +67,8 @@ function heatHandler() {
   var inputValue = document.getElementById("input").value; // Assigns contents of text box to inputValue
   overwriteFile();
   var dictionary = convertToDict();
-  document.getElementById("output").textContent = "Please refresh the page to fix an error, if it failed make sure you copied it properly otherwise contact galaga for assistance";
-  document.getElementById("input").value = ""; // Clear input
+  document.getElementById("output").textContent = "Please refresh the page in case of error. If it failed make sure the data was copied properly otherwise contact galaga for assistance.";
+  //document.getElementById("input").value = ""; // Clear input
   drawHeatMap(dictionary,100) // Runs the path trace
 }
 
@@ -77,6 +78,7 @@ function clearHandler() {
   ctx.transform(-1, 0, 0, 1, canvas.width, 0);
   ctx.drawImage(image, 0, 0); //Sets the map background to the canvas
   ctx.transform(-1, 0, 0, 1, canvas.width, 0);
+  document.getElementById("input").value = ""; // Clear input
   document.getElementById("output").textContent = "Map cleared";
 
 }
@@ -110,7 +112,7 @@ function drawPath(pathData) {
             ctx.stroke(); // Draws the line
             ctx.beginPath(); // start a new path for the next line
             ctx.moveTo((((pathData[key][1] / 12) + 445)), (pathData[key][0] / 11) + 290); // move to the start of the next line
-        }, i * 50); // Ends the wait
+        }, i * timeScale.value); // Ends the wait
     }
     setTimeout(() => { //Just for visual effect so its possible for the user to watch the path generate
       cooldown = false
@@ -150,7 +152,7 @@ function drawHeatMap(pathData){
             ctx.globalAlpha = .125
             ctx.fill(); // Draws the line
             ctx.beginPath(); // start a new path for the next line
-        }, i * 50); // Ends the wait
+        }, i * timeScale.value); // Ends the wait
     }
 
 
