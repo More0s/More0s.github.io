@@ -7,6 +7,12 @@ var y = 0;
 var timeScale = document.getElementById("timeSlider")
 var cooldown = false;
 var tempString
+var xSlide = 450 // + = Left | 0 = Right
+var ySlide = 340 // + = Down | 0 = Top
+var xScale = 12.5 // Lower = Stretched Horizontally more
+var yScale = 11.5 // Lower = Stretched vertically more
+
+
 
 function overwriteFile() {
   var text = document.getElementById("input").value;
@@ -103,7 +109,7 @@ function drawPath(pathData) {
             continue; // If its the initilization key then skip it
 
         setTimeout(() => { //Just for visual effect so its possible for the user to watch the path generate
-            ctx.lineTo((((pathData[key][1] / 12) + 445)), (pathData[key][0] / 11) + 290); //Updates the pen's current locations
+            ctx.lineTo((((pathData[key][1] / xScale) + xSlide)), (pathData[key][0] / yScale) + ySlide); //Updates the pen's current locations
             var r = 0
             var g = Math.floor(0 + (i *colorIncrement));
             var b = 0
@@ -111,7 +117,7 @@ function drawPath(pathData) {
             ctx.strokeStyle = hexColor
             ctx.stroke(); // Draws the line
             ctx.beginPath(); // start a new path for the next line
-            ctx.moveTo((((pathData[key][1] / 12) + 445)), (pathData[key][0] / 11) + 290); // move to the start of the next line
+            ctx.moveTo((((pathData[key][1] / xScale) + xSlide)), (pathData[key][0] / yScale) + ySlide); // move to the start of the next line
         }, i * timeScale.value); // Ends the wait
     }
     setTimeout(() => { //Just for visual effect so its possible for the user to watch the path generate
@@ -147,7 +153,7 @@ function drawHeatMap(pathData){
             var g = 0
             var b = 0
             var hexColor = "#" + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1);
-            ctx.arc((((pathData[key][1] / 12) + 445)),((pathData[key][0] / 11) + 290), 40, 0, 2 * Math.PI)
+            ctx.arc((((pathData[key][1] / xScale) + xSlide)),((pathData[key][0] / yScale) + ySlide), 40, 0, 2 * Math.PI)
             ctx.fillStyle = hexColor
             ctx.globalAlpha = .125
             ctx.fill(); // Draws the line
