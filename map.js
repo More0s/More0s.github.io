@@ -14,7 +14,6 @@ var xScale = 12.5 // Lower = Stretched Horizontally more
 var yScale = 11.5 // Lower = Stretched vertically more
 var isSky = false
 
-
 function overwriteFile() {
   var text = document.getElementById("input").value;
   var lines = text.split("\n");
